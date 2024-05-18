@@ -1,0 +1,86 @@
+export PATH=$HOME/.local/bin:$PATH
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/bin:$PATH
+export PATH=/usr/local:$PATH
+export PATH='/bin:/sbin':"$PATH"
+export LANG=ja_JP.UTF-8
+export LESSCHARSET=utf-8
+export EDITOR=nvim
+export NVIMINIT='~/.config/nvim/init.lua'
+
+### completion
+if [ -f ~/dotfiles/git-completion.bash ]; then
+    source ~/dotfiles/git-completion.bash
+fi
+
+if [ -f ~/dotfiles/git-prompt.sh ]; then
+    source ~/dotfiles/git-prompt.sh
+fi
+
+# docker
+if [ -f /usr/local/etc/bash_completion.d/docker ]; then
+    . /usr/local/etc/bash_completion.d/docker
+fi
+
+# docker-compose
+if [ -f /usr/local/etc/bash_completion.d/docker-compose ]; then
+    . /usr/local/etc/bash_completion.d/docker-compose
+fi
+
+
+# プロンプトに各種情報を表示
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWUPSTREAM=1
+GIT_PS1_SHOWUNTRACKEDFILES=
+GIT_PS1_SHOWSTASHSTATE=1
+
+############### ターミナルのコマンド受付状態の表示変更
+# \u ユーザ名
+# \h ホスト名
+# \W カレントディレクトリ
+# \w カレントディレクトリのパス
+# \n 改行
+# \d 日付
+# \[ 表示させない文字列の開始
+# \] 表示させない文字列の終了
+# \$ $
+export PS1='\n\[\e[1;96m\]\u@\H |\[\033[0m\]\w\n\t (\[\e[96m\]\!)\[\e[1;35m\]$(__git_ps1) \[\e[1;37m\]\\$ '
+
+#重複Historyを削除
+export HISTCONTROL=ignoredups
+#Historyに実行時間も表示
+HISTTIMEFORMAT='%y/%m/%d %H:%M:%S ';
+
+export HISTCONTROL=ignorespace        # 空白から始めたコマンドを無視
+export HISTIGNORE="fg*:bg*:history*"  # Historyに表示しないコマンド
+export HISTTIMEFORMAT                 # Historyに時刻を表示
+alias sudo='sudo -E'                  # sudoでも環境を引き継ぐ
+alias cl='clear'
+alias vim="nvim"
+alias vis="nvim -S ~/.vim.session"
+alias gc='git checkout'
+alias gs='git status'
+alias gb='git branch'
+alias gsb='git status && git branch'
+alias gti='git'
+alias g='git'
+alias gcfr='git checkout master&& git fetch -p&& git rebase origin/master'
+alias glf='git log --oneline --decorate --graph --branches --tags --remotes'
+
+# tmuxを256色に
+export TERM=screen-256color
+# LSColor Generator
+# https://geoff.greer.fm/lscolors/
+alias l='ls -alF --color=auto'
+alias ls='ls --color=auto'
+LS_COLORS='di=36:ln=35:so=36:pi=33:ex=32:bd=36:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
+export LS_COLORS
+# pyenv
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

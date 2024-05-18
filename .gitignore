@@ -1,0 +1,16 @@
+# 共通.gitignore
+# ~/.gitconfigでこのファイルを指定する
+# ```~/.gitconfig
+# [core]
+# excludesfile = ~/.gitignore
+# ```
+# # プロジェクト独自だけどプライベートに.gitignoreを設定するには
+# .gitignoreはdotfiles/.git/info/exclude
+# 
+
+start.sh
+get-pip.py
+.python-version
+.DS_Store
+/env/
+/log/

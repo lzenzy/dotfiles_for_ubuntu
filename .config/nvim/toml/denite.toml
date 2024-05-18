@@ -1,0 +1,154 @@
+## [参考URL]
+#  http://yukimemi.github.io/post/2017-05-24_Use%20denite/
+#  http://qiita.com/okamos/items/2259d5c770d51b88d75b
+#  https://leico.github.io/TechnicalNote/VimR/VimR-dein-toml.html
+#  http://qiita.com/okamos/items/4e1665ecd416ef77df7c
+#  http://qiita.com/okamos/items/4e1665ecd416ef77df7c
+## 
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+depends = ['neomru.vim']
+on_event = 'BufRead'
+if = 'has("nvim")'
+if = 'has("python3")'
+hook_add= '''
+" Denite key-bind
+" Deniteのprefix <space>
+nmap <Space> [denite]
+
+""[Space] a   カレントディレクトリ以下を表示
+nnoremap <silent> [denite]a :<C-u>Denite<Space>file/rec file<CR>
+
+""[Space] f    バッファと最近開いたファイル一覧を表示
+nnoremap <silent> [denite]f :<C-u>Denite<Space>file_mru<CR>
+
+""[Space] l    現在ファイルの行を表示
+nnoremap <silent> [denite]l :<C-u>Denite<Space>line<CR>
+
+"" バッファ一覧 (現在のタブ)
+nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
+
+""[Space] y    Yank履歴を表示 
+nnoremap <silent> [denite]y :<C-u>Denite<Space>neoyank<CR>
+
+""[Space] g grep検索 -buffer-name=
+nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
+
+""[Space] w カーソル位置の単語でgrep検索
+nnoremap <silent> [denite]w :<C-w>DeniteCursorWord grep<CR>
+
+"" [Space] p プロジェクトディレクトリをgrep検索
+nnoremap <silent> [denite]p :<C-u>DeniteProjectDir grep<CR>
+
+"" Denite grep検索結果を再表示する
+nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
+
+"" resumeした検索結果の次の行の結果へ飛ぶ
+" nnoremap <silent> [denite]j :<C-u>Denite -resume -select=+1 -immediately<CR>
+" nnoremap <silent> [denite]j :<C-u>Denite -resume -immediately -cursor-pos=+1<CR>
+
+"" resumeした検索結果の前の行の結果へ飛ぶ
+" nnoremap <silent> [denite]k :<C-u>Denite -resume -select=-1 -immediately<CR>
+
+""[Space] m memolist
+nnoremap <silent> [denite]m :<C-w>MemoList<CR>
+
+""[Space] m memolist新規
+nnoremap <silent> [denite]n :<C-w>MemoNew<CR>
+
+'''
+hook_post_source = '''
+"" v0.4.0 からデフォルトのキーバインドが廃止されたため追加
+call denite#custom#option('default', 'prompt', '>')
+augroup denite_filter
+  autocmd FileType denite call s:denite_my_settings()
+  function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> <CR>
+    \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> o
+    \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> d
+    \ denite#do_map('do_action', 'delete')
+    nnoremap <silent><buffer><expr> p
+    \ denite#do_map('do_action', 'preview')
+    nnoremap <silent><buffer><expr> q
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> <esc>
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> i
+    \ denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <Space>
+    \ denite#do_map('toggle_select').'j'
+  endfunction
+augroup END
+
+"" use floating
+let s:denite_win_width_percent = 0.55
+let s:denite_win_height_percent = 0.9
+" Change denite default options
+call denite#custom#option('default', {
+    \ 'split': 'floating',
+    \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+    \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+    \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+    \ })
+
+" Define alias
+"
+
+".git以下のディレクトリ検索
+nnoremap <silent> [denite]k :<C-u>Denite -direction=topleft
+      \ -path=`substitute(finddir('.git', './;'), '.git', '', 'g')`
+      \ file_rec/git<CR>
+
+call denite#custom#source('file'    , 'matchers', ['matcher_cpsm', 'matcher_fuzzy'])
+
+call denite#custom#source('buffer'  , 'matchers', ['matcher_regexp'])
+call denite#custom#source('file_mru', 'matchers', ['matcher_regexp'])
+call denite#custom#alias('source', 'file_rec/git', 'file/rec')
+
+call denite#custom#var('file_rec/git', 'command',
+      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+
+call denite#custom#var('file/rec', 'command',
+    \ ['pt', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+"" Change ignore_globs
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+      \ [ '.git/', '.ropeproject/', '__pycache__/',
+      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+
+"" jj で denite/insert を抜けるようにする
+call denite#custom#map('insert', 'jj', '<denite:enter_mode:normal>')
+
+" コマンド
+if executable('pt')
+  call denite#custom#var('file_rec', 'command', ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', ''])
+  call denite#custom#var('grep', 'command', ['pt'])
+  call denite#custom#var('grep', 'default_opts', ['--nogroup', '--nocolor', '--smart-case'])
+  call denite#custom#var('grep', 'recursive_opts', ['--hidden'])  " ドットファイルも検索
+  call denite#custom#var('grep', 'pattern_opt', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#var('grep', 'encoding', ['utf-8'])
+elseif executable('rg')
+  call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git', ''])
+  call denite#custom#var('grep', 'command', ['rg'])
+  call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', ['-regexp'])
+  call denite#custom#var('grep', 'separator', ['--'])
+elseif executable('ag')
+  call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+  call denite#custom#var('grep', 'command', ['ag'])
+  call denite#custom#var('grep', 'default_opts',['-i', '--vimgrep'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+endif
+'''
+

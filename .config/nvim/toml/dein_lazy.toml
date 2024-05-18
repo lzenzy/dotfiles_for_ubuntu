@@ -1,0 +1,73 @@
+# [参考:Python開発環境](http://lambdalisue.hatenablog.com/entry/2013/06/23/071344)
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'Vimjas/vim-python-pep8-indent'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'heavenshell/vim-jsdoc'
+hook_add = '''
+  let g:jedi#popup_select_first = 0 "1個目の候補が入力されるっていう設定を解除
+  let g:jedi#popup_on_dot = 0        " .を入力すると補完が始まるという設定を解除
+  let g:jedi#goto_command = "<leader>d"
+  let g:jedi#goto_assignments_command = "<leader>g"
+  let g:jedi#goto_definitions_command = ""
+  let g:jedi#documentation_command = "K"
+  let g:jedi#usages_command = "<leader>n"
+  let g:jedi#rename_command = "<leader>R" "quick-runと競合しないように大文字Rに変更. READMEだと<leader>r
+  autocmd FileType python setlocal completeopt-=preview "ポップアップを表示しない
+'''
+
+[[plugins]]
+repo = 'ervandew/supertab'
+# Tabで補完する場合はこちらを有効に:
+# hook_add = '''
+#   let g:jedi#completions_command = "<Tab>"
+# '''
+
+[[plugins]]
+repo = 'tpope/vim-obsession'
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_add= '''
+"-----Open Browser-----
+" http://www.google.com
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
+nmap gl <Plug>(openbrowser-open)
+vmap gl <Plug>(openbrowser-open)
+nmap gs <plug>(openbrowser-search)
+vmap gs <plug>(openbrowser-search)
+'''
+
+[[plugins]]
+repo = 'mattn/emmet-vim'      #Html編集用プラグイン
+hook_add= '''
+"-----Emmet-----
+" Ctrl-eで展開
+" [解説](http://leko.jp/archives/442)
+" [チートシート](http://docs.emmet.io/cheat-sheet/)
+" [チートシート](http://coliss.com/articles/build-websites/operation/work/cheat-sheets-for-front-end-developer-2014.html)
+let g:user_emmet_leader_key='<c-e>'
+let g:user_emmet_settings = {
+    \    'variables': {
+    \      'lang': "ja"
+    \    },
+    \   'indentation': '  '
+    \ }
+'''
+
+[[plugins]]
+repo = 'Shougo/vimshell'
+rev = '3787e5'

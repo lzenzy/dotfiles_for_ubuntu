@@ -1,0 +1,57 @@
+[[plugins]]
+repo = 'w0rp/ale'
+on_ft = ['javascript', 'python', 'html', 'css']
+hook_post_source='''
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 0
+
+"ロケーションリストの代わりにQuickFixを使用する場合は下記設定を追加。
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+" エラーと警告を開いたままにする
+let g:ale_open_list = 0
+" エラーと警告がなくなっても開いたままにする
+let g:ale_keep_list_window_open = 0
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['mypy'],
+\}
+
+let g:ale_fixers = {
+\ 'python': ['black', 'isort'],
+\}
+let g:ale_fix_on_save = 1
+" MyPy がグローバル環境または仮想環境で利用可能なことを確認
+let g:ale_python_mypy_executable = 'mypy'
+" オプション: MyPy の設定をカスタマイズ
+let g:ale_python_mypy_options = '--ignore-missing-imports --check-untyped-defs'
+
+""  Lintの設定
+function! ALEStatus()
+  return ALEGetStatusLine()
+endfunction
+" ALELint終了後にlightlineを更新
+augroup LLupdate
+    autocmd!
+    autocmd User ALELint call lightline#update()
+augroup END
+'''
+
+# [[plugins]]
+# repo = 'prettier/vim-prettier'
+# on_ft = ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html']
+# build = 'npm install'
+# hook_add = '''
+#   let g:prettier#autoformat = 1
+#   let g:prettier#autoformat_require_pragma = 0
+# '''
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'

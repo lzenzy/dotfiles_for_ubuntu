@@ -75,11 +75,6 @@ alias l='ls -alF --color=auto'
 alias ls='ls --color=auto'
 LS_COLORS='di=36:ln=35:so=36:pi=33:ex=32:bd=36:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 export LS_COLORS
-# pyenv
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

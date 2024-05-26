@@ -45,7 +45,7 @@ GIT_PS1_SHOWSTASHSTATE=1
 # \] 表示させない文字列の終了
 # \$ $
 # カラフルなプロンプト設定
-export PS1='\n\[\e[1;32m\]\u@\H |\[\e[36m\]\w\n\[\e[1;33m\]\t (\[\e[1;36m\]\!)\[\e[1;35m\] \[\e[1;37m\]$ '
+export PS1='\n\[\e[1;32m\]\u@\H |\[\e[1;34m\]\w\n\[\e[1;33m\]\t (\[\e[1;36m\]\!)\[\e[1;35m\] \[\e[1;37m\]$ '
 #重複Historyを削除
 export HISTCONTROL=ignoredups
 #Historyに実行時間も表示

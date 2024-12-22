@@ -1,9 +1,10 @@
 -- ====================<<< General >>>==============================
 
+
 -- Path
 -- vim.opt.python_host_prog = expand('~/.pyenv/versions/2.7.17/bin/python')
 -- Neovim3が使うpython3のパス
-vim.g.python3_host_prog = vim.fn.expand('~/.pyenv/versions/3.10.9/bin/python')
+vim.g.python3_host_prog = vim.fn.expand('~/.pyenv/versions/3.11.9/bin/python')
 
 -- vim.opt.mapleader = "\,"
 -- vim.opt.mapleader = "\<SPACE>"

@@ -8,25 +8,12 @@ export LESSCHARSET=utf-8
 export EDITOR=nvim
 export NVIMINIT='~/.config/nvim/init.lua'
 
-### completion
-if [ -f ~/dotfiles/git-completion.bash ]; then
-    source ~/dotfiles/git-completion.bash
+# Load user-specific bash completions
+if [ -d ~/dotfiles/bash_completion.d ]; then
+    for bcfile in ~/dotfiles/bash_completion.d/* ; do
+        [ -f "$bcfile" ] && . "$bcfile"
+    done
 fi
-
-if [ -f ~/dotfiles/git-prompt.sh ]; then
-    source ~/dotfiles/git-prompt.sh
-fi
-
-# docker
-if [ -f /usr/local/etc/bash_completion.d/docker ]; then
-    . /usr/local/etc/bash_completion.d/docker
-fi
-
-# docker-compose
-if [ -f /usr/local/etc/bash_completion.d/docker-compose ]; then
-    . /usr/local/etc/bash_completion.d/docker-compose
-fi
-
 
 # プロンプトに各種情報を表示
 GIT_PS1_SHOWDIRTYSTATE=1
@@ -45,7 +32,7 @@ GIT_PS1_SHOWSTASHSTATE=1
 # \] 表示させない文字列の終了
 # \$ $
 # カラフルなプロンプト設定
-export PS1='\n\[\e[1;32m\]\u@\H |\[\e[1;34m\]\w\n\[\e[1;33m\]\t (\[\e[1;36m\]\!)\[\e[1;35m\] \[\e[1;37m\]$ '
+export PS1='\n\[\e[1;32m\]\u@\H |\[\e[1;96m\]\w\n\[\e[1;33m\]\t (\[\e[1;36m\]\!)\[\e[1;35m\]$(__git_ps1) \[\e[1;37m\]$ '
 #重複Historyを削除
 export HISTCONTROL=ignoredups
 #Historyに実行時間も表示
@@ -73,7 +60,7 @@ export TERM=screen-256color
 # https://geoff.greer.fm/lscolors/
 alias l='ls -alF --color=auto'
 alias ls='ls --color=auto'
-LS_COLORS='di=36:ln=35:so=36:pi=33:ex=32:bd=36:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
+LS_COLORS='di=36:ln=35:so=36:pi=33:ex=32:bd=36:cd=36;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 export LS_COLORS
 
 export NVM_DIR="$HOME/.nvm"

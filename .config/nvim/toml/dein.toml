@@ -268,14 +268,6 @@ repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
 [[plugins]]
-# 矩形貼付けができないバグの解消
-repo = 'bfredl/nvim-miniyank'
-hook_add='''
-map p <Plug>(miniyank-autoput)
-map P <Plug>(miniyank-autoPut)
-'''
-
-[[plugins]]
 # 日付もインクリメント
 repo = 'tpope/vim-speeddating'
 
@@ -341,3 +333,4 @@ hook_add='''
   call submode#map('bufmove', 'n', '', '+', '<C-w>+')
   call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 '''
+

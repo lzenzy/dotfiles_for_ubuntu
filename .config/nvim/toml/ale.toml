@@ -21,7 +21,8 @@ let g:ale_open_list = 0
 let g:ale_keep_list_window_open = 0
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'python': ['mypy'],
+\   'python': ['flake8'],
+\   'sh': ['shellcheck'],
 \}
 
 let g:ale_fixers = {
@@ -29,9 +30,12 @@ let g:ale_fixers = {
 \}
 let g:ale_fix_on_save = 1
 " MyPy がグローバル環境または仮想環境で利用可能なことを確認
-let g:ale_python_mypy_executable = 'mypy'
+" let g:ale_python_mypy_executable = 'mypy'
 " オプション: MyPy の設定をカスタマイズ
-let g:ale_python_mypy_options = '--ignore-missing-imports --check-untyped-defs'
+" let g:ale_python_mypy_options = '--ignore-missing-imports --check-untyped-defs'
+
+" shellcheck のオプションを設定（必要に応じて）
+let g:ale_sh_shellcheck_options = '-f gcc -x'
 
 ""  Lintの設定
 function! ALEStatus()

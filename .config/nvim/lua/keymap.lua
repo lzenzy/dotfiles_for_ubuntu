@@ -31,9 +31,6 @@ vim.keymap.set('n', 'い', 'i')
 vim.keymap.set('n', 'う', 'u')
 vim.keymap.set('n', 'お', 'o')
 
-vim.keymap.set('n', ';', ':')
-vim.keymap.set('n', ':', ';')
-
 -- 検索結果のハイライトをクリア
 vim.keymap.set('n', '<ESC><ESC>', ':nohlsearch<CR>', {silent = true})
 vim.keymap.set('n', '<C-j><C-j>', ':nohlsearch<CR>', {silent = true})

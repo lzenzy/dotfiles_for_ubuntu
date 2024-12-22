@@ -62,7 +62,6 @@ hook_add = '''
 ####   Light Line
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['tpope/vim-fugitive']
 hook_add = '''
 command! -bar Llupdate    call lightline#init()|
   \ call lightline#update()
@@ -299,9 +298,6 @@ repo = 'github/copilot.vim'
 
 [[plugins]]
 repo = 'jpalardy/vim-slime'
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'rking/ag.vim'

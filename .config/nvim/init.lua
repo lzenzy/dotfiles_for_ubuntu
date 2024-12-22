@@ -76,3 +76,4 @@ require("keymap")
 require("syntaxinfo")
 require("load-dein")
 require("filetype")
+

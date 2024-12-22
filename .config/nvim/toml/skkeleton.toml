@@ -4,22 +4,10 @@
 repo = 'vim-denops/denops.vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-source-nvim-lsp'
-
-[[plugins]]
-repo = 'Shougo/ddc.vim'
-hook_add = '''
-  call ddc#custom#patch_global('sources', ['nvim-lsp', 'file', 'skkeleton'])
-  call ddc#custom#patch_global('completionMenu', 'pum.vim')
-  call ddc#enable()
-'''
-
-[[plugins]]
 repo = 'Shougo/pum.vim'
 
 [[plugins]]
 repo = 'vim-skk/skkeleton'
-depends = ['vim-denops/denops.vim']
 on_event='InsertEnter'
 hook_source = '''
 lua << EOF
@@ -38,6 +26,13 @@ vim.api.nvim_set_keymap('c', '<C-l>', '<Plug>(skkeleton-disable)', { noremap = t
 vim.fn['skkeleton#config']({
   globalDictionaries = {
     "~/.skk/SKK-JISYO.L",
+    "~/.skk/SKK-JISYO.assoc",
+    "~/.skk/SKK-JISYO.edict",
+    "~/.skk/SKK-JISYO.geo",
+    "~/.skk/SKK-JISYO.jinmei",
+    "~/.skk/SKK-JISYO.law",
+    "~/.skk/SKK-JISYO.propernoun",
+    "~/.skk/SKK-JISYO.station",
   },
   eggLikeNewline = true,
   keepState = true,
@@ -47,5 +42,13 @@ vim.fn['skkeleton#config']({
 
 -- inputモード時に '/' キーを abbreviation 用に上書き
 vim.fn['skkeleton#register_keymap']('input', '/', 'abbrev')
+EOF
+'''
+
+[[plugins]]
+repo =  "delphinus/skkeleton_indicator.nvim"
+hook_post_source = '''
+lua << EOF
+require("skkeleton_indicator").setup {}
 EOF
 '''

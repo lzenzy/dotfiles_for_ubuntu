@@ -21,9 +21,11 @@ function init_dein()
     -- Plugin configuration file path
     -- local script_dir = vim.fn.fnamemodify(vim.fn.expand('<sfile>'), ':p:h')
     local script_dir = vim.fn.stdpath('config')
+
     local toml_files = {
       { path = script_dir .. '/toml/dein.toml', lazy = 0 },
       { path = script_dir .. '/toml/ale.toml', lazy = 1 },
+      { path = script_dir .. '/toml/skkeleton.toml', lazy = 0 },
       { path = script_dir .. '/toml/denite.toml', lazy = 1 },
       { path = script_dir .. '/toml/dein_lazy.toml', lazy = 1 },
     }

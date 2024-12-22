@@ -1,6 +1,5 @@
-###### For Dein settings ######### 
-# Dein is plugin manager.
-#
+###### For Dein settings #########
+# Dein is plugin manager
 # プラグイン追加後下記実行
 # :call dein#install()
 # :call dein#update()
@@ -54,9 +53,16 @@ hook_post_update = '''
   nnoremap <silent> <C-q> :QuickRun<CR>
 '''
 
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+  lua vim.notify("vim-fugitive has been loaded!")
+'''
+
 ####   Light Line
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+depends = ['tpope/vim-fugitive']
 hook_add = '''
 command! -bar Llupdate    call lightline#init()|
   \ call lightline#update()
@@ -99,11 +105,13 @@ function! LightlineReadonly()
 endfunction
 
 function! LightlineFugitive()
+  if exists('*FugitiveHead')
     if &ft !~? 'vimfiler\|gundo' && winwidth(0) > 55
       let branch = FugitiveHead()
       let fugitive_info = branch != '' ? '⭠ ' . branch : ''
       return fugitive_info
     endif
+  endif
 endfunction
 
 function! LightlineFilename()

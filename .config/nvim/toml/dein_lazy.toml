@@ -71,3 +71,5 @@ let g:user_emmet_settings = {
 [[plugins]]
 repo = 'Shougo/vimshell'
 rev = '3787e5'
+
+

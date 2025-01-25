@@ -23,6 +23,8 @@ vim.keymap.set('i', '<C-k>', '<Up>', {noremap = true})
 vim.keymap.set('i', '<C-h>', '<Left>', {noremap = true})
 vim.keymap.set('i', '<C-l>', '<Right>', {noremap = true})
 vim.keymap.set('i', 'jj', '<Esc>', {noremap = true})
+vim.keymap.set('i', 'jk', '<Esc>', {noremap = true})
+vim.keymap.set('i', 'kj', '<Esc>', {noremap = true})
 vim.keymap.set('i', 'qq', '<Esc>', {noremap = true})
 
 -- 日本語入力がオンのままでも使えるコマンド
@@ -34,7 +36,6 @@ vim.keymap.set('n', 'お', 'o')
 -- 検索結果のハイライトをクリア
 vim.keymap.set('n', '<ESC><ESC>', ':nohlsearch<CR>', {silent = true})
 vim.keymap.set('n', '<C-j><C-j>', ':nohlsearch<CR>', {silent = true})
-
 
 -- -----Keybind-----
 local keymap = vim.keymap.set
@@ -104,4 +105,29 @@ keymap('n', 'sq', ':<C-u>q<CR>', opts)
 -- バッファを閉じる
 keymap('n', 'sQ', ':<C-u>bd<CR>', opts)
 
+-- -----Large Caps Toggle----
+vim.keymap.set({ "i", "c" }, "<M-u>",
+    function()
+        local line, col
+        if vim.fn.mode() == "c" then
+            line = vim.fn.getcmdline()
+            col = vim.fn.getcmdpos()
+        else
+            line = vim.fn.getline(".")
+            col = vim.fn.col(".")
+        end
+        local substring = line:sub(1, col - 1)
+        local word = vim.fn.matchstr(substring, [[\v<(\k(<)@!)*$]])
+        if word == "" then
+            return ""
+        end
+        local toggled_word = word:match("^%u") and word:lower() or word:upper()
+        if vim.fn.mode() == "c" then
+            return vim.api.nvim_replace_termcodes("<C-w>" .. toggled_word, true, true, true)
+        else
+            return vim.api.nvim_replace_termcodes("<C-w>" .. toggled_word, true, true, true)
+        end
+    end,
+    { expr = true }
+)
 

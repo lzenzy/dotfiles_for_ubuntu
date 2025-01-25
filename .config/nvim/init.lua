@@ -6,6 +6,9 @@
 -- Neovim3が使うpython3のパス
 vim.g.python3_host_prog = vim.fn.expand('~/.pyenv/versions/3.11.9/bin/python')
 
+-- EOLを自動追加
+vim.opt.fixeol = true
+
 -- vim.opt.mapleader = "\,"
 -- vim.opt.mapleader = "\<SPACE>"
 vim.opt.encoding = "utf-8"
@@ -44,7 +47,6 @@ vim.opt.path:append("**")             -- find検索
 -- -----Backup and Swap-----
 vim.opt.directory = os.getenv("HOME") .. "/.vimbackup"
 vim.opt.backupdir = os.getenv("HOME") .. "/.vimbackup"
-
 
 -- api を vim.api からロード
 local api = vim.api

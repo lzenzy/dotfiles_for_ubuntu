@@ -1,6 +1,6 @@
 [[plugins]]
 repo = 'w0rp/ale'
-on_ft = ['javascript', 'python', 'html', 'css']
+on_ft = ['javascript', 'python', 'html', 'css', 'sh', 'yaml']
 hook_post_source='''
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
 let g:ale_echo_msg_error_str = 'E'
@@ -18,11 +18,13 @@ let g:ale_set_quickfix = 1
 " エラーと警告を開いたままにする
 let g:ale_open_list = 0
 " エラーと警告がなくなっても開いたままにする
+autocmd BufRead,BufNewFile .env set filetype=env
 let g:ale_keep_list_window_open = 0
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'python': ['flake8'],
-\   'sh': ['shellcheck'],
+\   'python': ['flake8', 'cspell'],
+\   'sh': ['shellcheck', 'cspell'],
+\   'yaml': ['cspell'],
 \}
 
 let g:ale_fixers = {
@@ -34,7 +36,7 @@ let g:ale_fix_on_save = 1
 " オプション: MyPy の設定をカスタマイズ
 " let g:ale_python_mypy_options = '--ignore-missing-imports --check-untyped-defs'
 
-" shellcheck のオプションを設定（必要に応じて）
+" shellcheck のオプションを設定（外部ソースを読み込む）
 let g:ale_sh_shellcheck_options = '-f gcc -x'
 
 ""  Lintの設定

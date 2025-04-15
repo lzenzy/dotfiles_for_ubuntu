@@ -10,6 +10,12 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'kana/vim-submode'
+
+[[plugins]]
+repo = 'kien/rainbow_parentheses.vim'
+
+[[plugins]]
 repo = 'leico/autodate.vim'
 
 [[plugins]]
@@ -57,7 +63,7 @@ hook_post_update = '''
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
-repo = 'junegunn/rainbow_parentheses.vim'
+repo = 'kien/rainbow_parentheses.vim'
 hook_add = '''
 " Activate
 :RainbowParentheses

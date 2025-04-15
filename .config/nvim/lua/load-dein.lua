@@ -25,7 +25,6 @@ function init_dein()
     local toml_files = {
       { path = script_dir .. '/toml/dein.toml', lazy = 0 },
       { path = script_dir .. '/toml/ale.toml', lazy = 1 },
-      { path = script_dir .. '/toml/skkeleton.toml', lazy = 0 },
       { path = script_dir .. '/toml/denite.toml', lazy = 1 },
       { path = script_dir .. '/toml/dein_lazy.toml', lazy = 1 },
     }
